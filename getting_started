@@ -1,0 +1,50 @@
+### Step 1: Clone and Setup Virtual Environment
+# Clone the repository
+git clone [repository-url]
+cd recruitment_platform
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+.\venv\Scripts\activate
+# On Unix or MacOS:
+source venv/bin/activate
+
+### Step 2: Install Dependencies
+# Install required packages
+pip install -r requirements.txt
+
+### Step 3: Database Setup
+Create PostgreSQL Database using pgAdmin4 pgAdmin download
+CREATE DATABASE easy_lodge;
+
+### Step 4: Django Settings
+In your Django project, navigate to settings.py and update the database configuration section to use PostgreSQL:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'easy_lodge',  # The database name you just created
+        'USER': 'your_postgresql_user',  # Your PostgreSQL user
+        'PASSWORD': 'your_postgresql_password',  # Your PostgreSQL password
+        'HOST': 'localhost',
+        'PORT': '5432', # Your PostgreSQL server port (right click server properties)
+    }
+}
+# Make sure to replace your_postgresql_user and your_postgresql_password with your PostgreSQL user credentials.
+
+### Step 5: Apply Migrations
+# Next, apply the migrations to create the necessary tables in your PostgreSQL database.
+python manage.py migrate
+
+### Step 6: Create a Superuser
+# python manage.py createsuperuser
+Follow the prompts to set up your superuser account.
+
+### Step 7: Run the Development Server
+# python manage.py runserver
+Visit http://127.0.0.1:8000/ in your browser to see the project in action.
+
+### Step 8: Access the Admin Panel
+To access the Django admin panel, go to http://127.0.0.1:8000/admin/ and log in using the superuser credentials you created earlier.
