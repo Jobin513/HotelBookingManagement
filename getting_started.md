@@ -69,3 +69,27 @@ Visit http://127.0.0.1:8000/ in your browser to see the project in action.
 ```bash
 To access the Django admin panel, go to http://127.0.0.1:8000/admin/ and log in using the superuser credentials you created earlier.
 ```
+
+Step 9: Setup Frontend with React
+Install Node.js and npm
+Ensure Node.js is installed on your system. If not, download and install it from nodejs.org.
+
+Install React App Dependencies
+Navigate to the frontend directory and install the dependencies:
+
+```bash
+cd frontend
+npm install
+Start the React Development Server
+
+Run the following command to start the React app:
+npm start
+
+The React app will run at http://localhost:3000.
+```
+
+### Step 10: Visit the Application
+After starting both the Django backend and React frontend:
+
+Django Backend: Visit http://127.0.0.1:8000 for backend-related tasks.
+React Frontend: Visit http://localhost:3000 to interact with the React frontend.
