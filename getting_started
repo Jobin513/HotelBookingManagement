@@ -12,25 +12,23 @@ python -m venv venv
 .\venv\Scripts\activate
 # On Unix or MacOS:
 source venv/bin/activate
-Step 2: Install Dependencies
-bash
-Copy
-Edit
+```
+
+### Step 2: Install Dependencies
+```bash
 # Install required packages
 pip install -r requirements.txt
-Step 3: Database Setup
+```
+
+### Step 3: Database Setup
 Create PostgreSQL Database using pgAdmin4
-
-sql
-Copy
-Edit
+```sql
 CREATE DATABASE easy_lodge;
-Step 4: Django Settings
-In your Django project, navigate to settings.py and update the database configuration section to use PostgreSQL:
+```
 
-python
-Copy
-Edit
+### Step 4: Django Settings
+In your Django project, navigate to settings.py and update the database configuration section to use PostgreSQL:
+```python
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -42,31 +40,31 @@ DATABASES = {
     }
 }
 Make sure to replace your_postgresql_user and your_postgresql_password with your PostgreSQL user credentials.
+```
 
-Step 5: Apply Migrations
+### Step 5: Apply Migrations
 Next, apply the migrations to create the necessary tables in your PostgreSQL database:
-
-bash
-Copy
-Edit
+```bash
 python manage.py migrate
-Step 6: Create a Superuser
-To access the Django Admin panel, you need to create a superuser account:
+```
 
-bash
-Copy
-Edit
+### Step 6: Create a Superuser
+
+To access the Django Admin panel, you need to create a superuser account:
+```bash
 python manage.py createsuperuser
 Follow the prompts to set up your superuser account.
+```
 
-Step 7: Run the Development Server
+### Step 7: Run the Development Server
+
 Start the development server:
-
-bash
-Copy
-Edit
+```bash
 python manage.py runserver
 Visit http://127.0.0.1:8000/ in your browser to see the project in action.
+```
 
-Step 8: Access the Admin Panel
+### Step 8: Access the Admin Panel
+```bash
 To access the Django admin panel, go to http://127.0.0.1:8000/admin/ and log in using the superuser credentials you created earlier.
+```
