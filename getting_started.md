@@ -45,6 +45,7 @@ Make sure to replace your_postgresql_user and your_postgresql_password with your
 ### Step 5: Apply Migrations
 Next, apply the migrations to create the necessary tables in your PostgreSQL database:
 ```bash
+python manage.py makemigrations
 python manage.py migrate
 ```
 
