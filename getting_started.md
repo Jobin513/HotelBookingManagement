@@ -70,7 +70,7 @@ Visit http://127.0.0.1:8000/ in your browser to see the project in action.
 To access the Django admin panel, go to http://127.0.0.1:8000/admin/ and log in using the superuser credentials you created earlier.
 ```
 
-Step 9: Setup Frontend with React
+### Step 9: Setup Frontend with React
 Install Node.js and npm
 Ensure Node.js is installed on your system. If not, download and install it from nodejs.org.
 
