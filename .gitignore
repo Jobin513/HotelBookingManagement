@@ -21,10 +21,14 @@ sdist/
 var/
 wheels/
 share/python-wheels/
+node_modules/
+.env
+requirements.txt
 *.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
+/backend/hotel_management/settings.py
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
