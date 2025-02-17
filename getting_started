@@ -1,4 +1,5 @@
 ### Step 1: Clone and Setup Virtual Environment
+```bash
 # Clone the repository
 git clone [repository-url]
 cd recruitment_platform
@@ -11,17 +12,25 @@ python -m venv venv
 .\venv\Scripts\activate
 # On Unix or MacOS:
 source venv/bin/activate
-
-### Step 2: Install Dependencies
+Step 2: Install Dependencies
+bash
+Copy
+Edit
 # Install required packages
 pip install -r requirements.txt
+Step 3: Database Setup
+Create PostgreSQL Database using pgAdmin4
 
-### Step 3: Database Setup
-Create PostgreSQL Database using pgAdmin4 pgAdmin download
+sql
+Copy
+Edit
 CREATE DATABASE easy_lodge;
-
-### Step 4: Django Settings
+Step 4: Django Settings
 In your Django project, navigate to settings.py and update the database configuration section to use PostgreSQL:
+
+python
+Copy
+Edit
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -29,22 +38,35 @@ DATABASES = {
         'USER': 'your_postgresql_user',  # Your PostgreSQL user
         'PASSWORD': 'your_postgresql_password',  # Your PostgreSQL password
         'HOST': 'localhost',
-        'PORT': '5432', # Your PostgreSQL server port (right click server properties)
+        'PORT': '5432',  # Your PostgreSQL server port (right click server properties)
     }
 }
-# Make sure to replace your_postgresql_user and your_postgresql_password with your PostgreSQL user credentials.
+Make sure to replace your_postgresql_user and your_postgresql_password with your PostgreSQL user credentials.
 
-### Step 5: Apply Migrations
-# Next, apply the migrations to create the necessary tables in your PostgreSQL database.
+Step 5: Apply Migrations
+Next, apply the migrations to create the necessary tables in your PostgreSQL database:
+
+bash
+Copy
+Edit
 python manage.py migrate
+Step 6: Create a Superuser
+To access the Django Admin panel, you need to create a superuser account:
 
-### Step 6: Create a Superuser
-# python manage.py createsuperuser
+bash
+Copy
+Edit
+python manage.py createsuperuser
 Follow the prompts to set up your superuser account.
 
-### Step 7: Run the Development Server
-# python manage.py runserver
+Step 7: Run the Development Server
+Start the development server:
+
+bash
+Copy
+Edit
+python manage.py runserver
 Visit http://127.0.0.1:8000/ in your browser to see the project in action.
 
-### Step 8: Access the Admin Panel
+Step 8: Access the Admin Panel
 To access the Django admin panel, go to http://127.0.0.1:8000/admin/ and log in using the superuser credentials you created earlier.
