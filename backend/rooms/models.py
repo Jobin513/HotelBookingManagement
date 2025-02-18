@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -23,6 +24,14 @@ class Room(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)  # Automatically set when created
     last_changed_by = models.CharField(max_length=100, blank=True, null=True)
     last_changed_date = models.DateTimeField(auto_now=True)  # Automatically set when updated
+
+    # Room Model related validation error raised messages
+    def clean(self):
+        if self.type not in dict(self.ROOM_TYPE_CHOICES):
+            raise ValidationError("Invalid room type. Must be Single, Double, or Suite.")
+        if self.status not in dict(self.ROOM_STATUS_CHOICES):
+            raise ValidationError("Invalid room status. Must be Available, Booked, or Under Maintenance")
+        super().clean()
 
     def __str__(self):
         return f"Room {self.room_number} - {self.type}"
