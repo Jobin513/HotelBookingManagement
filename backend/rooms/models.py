@@ -4,6 +4,8 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from backend.services import validate_room_capacity
+
 
 class Room(models.Model):
     ROOM_TYPE_CHOICES = [
@@ -42,7 +44,12 @@ class Room(models.Model):
             raise ValidationError("Price cannot be empty.")
         if self.price is decimal:
             raise ValidationError("Price must be a decimal.")
-
+        if not isinstance(self.capacity, int):
+            raise ValidationError("Room capacity must be an integer.")
+        if self.capacity < 1:
+            raise ValidationError("Room capacity must be at least 1.")
+        elif self.capacity > 5:  # Assuming 5 is the maximum allowed capacity
+            raise ValidationError("Room capacity cannot exceed 5.")
         super().clean()
 
     def __str__(self):
