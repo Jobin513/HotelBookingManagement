@@ -144,12 +144,12 @@ class RoomTest(TestCase):
             type="Single",
             price=50.00,
             status="Available",
-            capacity=1  # Assuming 1 is the minimum valid capacity
+            capacity=1
         )
         self.assertIsInstance(room1, Room)
         self.assertEqual(room1.capacity, 1)
 
-        # Test Case 2 - Room capacity just below minimum (invalid)
+        # Test Case 2 -  Room capacity lower than allowable room capacity (invalid)
         room2 = Room(
             room_number="102B",
             type="Double",
@@ -167,7 +167,7 @@ class RoomTest(TestCase):
             type="Suite",
             price=200.00,
             status="Available",
-            capacity=4  # Assuming 5 is the max allowed capacity
+            capacity=9  # Assuming 10 is the max allowed capacity
         )
         self.assertIsInstance(room1, Room)
         self.assertEqual(room1.capacity, 4)
@@ -178,7 +178,7 @@ class RoomTest(TestCase):
             type="Suite",
             price=200.00,
             status="Available",
-            capacity=11  # Assuming 5 is the max allowed capacity
+            capacity=12  # Assuming 10 is the max allowed capacity
         )
         with self.assertRaises(ValidationError):
             room2.full_clean()
@@ -190,7 +190,7 @@ class RoomTest(TestCase):
             type="Suite",
             price=200.00,
             status="Available",
-            capacity=5  # Maximum valid value
+            capacity=10  # Maximum valid value
         )
         self.assertIsInstance(room1, Room)
         self.assertEqual(room1.capacity, 5)
@@ -239,6 +239,42 @@ class RoomTest(TestCase):
         )
         with self.assertRaises(ValidationError):
             room4.full_clean()
+
+    def test_room_capacity_empty(self):
+        # Test Case 6 - Empty capacity input (invalid)
+        room = Room(
+            room_number="204D",
+            type="Suite",
+            price=200.00,
+            status="Available",
+            capacity=None  # Invalid, should be an integer
+        )
+        with self.assertRaises(ValidationError):
+            room.full_clean()
+
+    def test_room_capacity_invalid(self):
+        # Test Case 7 - Negative capacity (invalid)
+        room = Room(
+            room_number="205E",
+            type="Double",
+            price=150.00,
+            status="Available",
+            capacity=-1  # Invalid negative capacity
+        )
+        with self.assertRaises(ValidationError):
+            room.full_clean()
+
+    def test_room_capacity_valid(self):
+        # Test Case 8 - Valid capacity within range
+        room = Room.objects.create(
+            room_number="206F",
+            type="Suite",
+            price=200.00,
+            status="Available",
+            capacity=3  # A valid value within allowable range (1-10)
+        )
+        self.assertIsInstance(room, Room)
+        self.assertEqual(room.capacity, 3)
 
 
 
