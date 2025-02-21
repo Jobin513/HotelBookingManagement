@@ -86,9 +86,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'easy_lodge',           # Your database name
         'USER': 'postgres',     # Your PostgreSQL username
-        'PASSWORD': 'yourpassword',       # Your PostgreSQL password
+        'PASSWORD': 'Dog@9177167739',       # Your PostgreSQL password
         'HOST': 'localhost',               # Leave as 'localhost' if you're using local PostgreSQL
-        'PORT': '5434',                    # Default PostgreSQL port
+        'PORT': '5432',                    # Default PostgreSQL port
     }
 }
 

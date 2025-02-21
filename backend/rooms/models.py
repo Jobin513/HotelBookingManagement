@@ -1,3 +1,6 @@
+import decimal
+from decimal import Decimal
+
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -32,6 +35,14 @@ class Room(models.Model):
             raise ValidationError("Invalid room type. Must be Single, Double, or Suite.")
         if self.status not in dict(self.ROOM_STATUS_CHOICES):
             raise ValidationError("Invalid room status. Must be Available, Booked, or Under Maintenance")
+        if self.price > Decimal("500.00"):
+            raise ValidationError("Room could not be created. Price cannot be more than 500.00.")
+        if self.price < Decimal("50.00"):
+            raise ValidationError("Room could not be created. Price cannot be less than 50.00.")
+        if self.price is None:
+            raise ValidationError("Price cannot be empty.")
+        if self.price is decimal:
+            raise ValidationError("Price must be a decimal.")
         if not isinstance(self.capacity, int):
             raise ValidationError("Room capacity must be an integer.")
         if isinstance(self.capacity, float) and self.capacity.is_integer() is False:
