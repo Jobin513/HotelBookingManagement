@@ -1,7 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from backend.services import validate_room_capacity
 
 
 class Room(models.Model):
@@ -35,9 +34,11 @@ class Room(models.Model):
             raise ValidationError("Invalid room status. Must be Available, Booked, or Under Maintenance")
         if not isinstance(self.capacity, int):
             raise ValidationError("Room capacity must be an integer.")
+        if isinstance(self.capacity, float) and self.capacity.is_integer() is False:
+            raise ValidationError("Room capacity must be an integer.")
         if self.capacity < 1:
             raise ValidationError("Room capacity must be at least 1.")
-        elif self.capacity > 5:  # Assuming 5 is the maximum allowed capacity
+        if self.capacity > 5:  # Assuming 5 is the maximum allowed capacity
             raise ValidationError("Room capacity cannot exceed 5.")
         super().clean()
 
