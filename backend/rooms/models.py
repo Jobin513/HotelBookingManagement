@@ -4,8 +4,6 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from backend.services import validate_room_capacity
-
 
 class Room(models.Model):
     ROOM_TYPE_CHOICES = [

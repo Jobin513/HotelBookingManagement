@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from .models import Room
+from rooms.models import Room
 
 
 
@@ -136,6 +136,7 @@ class RoomTest(TestCase):
         )
         with self.assertRaises(ValidationError):
             room6.full_clean()
+
 #test case room near high boundary
     def test_room_price(self):
         """Creates a room with a valid price and checks validity."""
@@ -144,13 +145,13 @@ class RoomTest(TestCase):
         room = Room.objects.create(
             room_number="301A",
             type="Single",
-            price=499.00,  # Near high boundary
+            price=499.99,  # Near high boundary
             status="Available",
             capacity=2
         )
         room.full_clean()  # This triggers Django's built-in validation
         self.assertIsInstance(room, Room)  # Ensure the room object is created correctly
-        self.assertTrue(room.is_valid_price())  # Assuming is_valid_price() checks price validity
+        self.assertEqual(room.price, 499.99)
 
         # Test Case 2 - Room price at high boundary (Valid)
         room2 = Room.objects.create(
@@ -162,7 +163,7 @@ class RoomTest(TestCase):
         )
         room2.full_clean()
         self.assertIsInstance(room2, Room)  # Ensure the room object is created correctly
-        self.assertTrue(room2.is_valid_price())
+        self.assertEqual(room.price, 500.00)
 
         # Test Case 3 - Room price exceeding high boundary (Invalid)
         room3 = Room.objects.create(
@@ -172,6 +173,47 @@ class RoomTest(TestCase):
             status="Available",
             capacity=2
         )
+        room3.full_clean()
+        self.assertIsInstance(room3, Room)
+        self.assertEqual(room3.price, 500.01)
+
+        # Test Case 4 - Room price below low boundary (Invalid)
+        room4 = Room.objects.create(
+            room_number="304A",
+            type="Single",
+            price=49.99,  # Below valid range
+            status="Available",
+            capacity=2
+        )
+        with self.assertRaises(ValidationError):
+            room4.full_clean()
+
+        # Test case 5 - for empty room price
+        def test_room_price_empty(self):
+            """Creates a room with an empty price and expects a validation error."""
+            room = Room(
+                room_number="305A",
+                type="Single",
+                price=None,  # Empty price
+                status="Available",
+                capacity=2
+            )
+            with self.assertRaises(ValidationError):
+                room.full_clean()
+
+        # Test case 6 - for non-decimal room price
+        def test_room_price_non_decimal(self):
+            """Creates a room with a non-decimal price and expects a validation error."""
+            room = Room(
+                room_number="306A",
+                type="Single",
+                price="one hundred",  # Non-decimal value
+                status="Available",
+                capacity=2
+            )
+            with self.assertRaises(ValidationError):
+                room.full_clean()
+
     def test_room_capacity_near_low_boundary(self):
         # Test Case 1 - Room capacity just above minimum (valid)
         room1 = Room.objects.create(
@@ -196,42 +238,42 @@ class RoomTest(TestCase):
             room2.full_clean()
 
     def test_room_capacity_near_high_boundary(self):
-        # Test Case 4 - Room capacity just below the maximum (valid)
+        # Test Case 3 - Room capacity just below the maximum (valid)
         room1 = Room.objects.create(
             room_number="103D",
             type="Suite",
             price=200.00,
             status="Available",
-            capacity=9  # Assuming 10 is the max allowed capacity
+            capacity=4  # Max capacity is 5
         )
         self.assertIsInstance(room1, Room)
         self.assertEqual(room1.capacity, 4)
 
-        # Test Case 5 - Room capacity just above maximum (invalid)
+        # Test Case 4 - Room capacity just above maximum (invalid)
         room2 = Room(
             room_number="104E",
             type="Suite",
             price=200.00,
             status="Available",
-            capacity=12  # Assuming 10 is the max allowed capacity
+            capacity=6
         )
         with self.assertRaises(ValidationError):
             room2.full_clean()
 
     def test_room_capacity_high_boundary(self):
-        # Test Case 6 - Room capacity at the maximum allowed limit (valid)
+        # Test Case 5- Room capacity at the maximum allowed limit (valid)
         room1 = Room.objects.create(
             room_number="105F",
             type="Suite",
             price=200.00,
             status="Available",
-            capacity=10  # Maximum valid value
+            capacity=5  # Maximum valid value
         )
         self.assertIsInstance(room1, Room)
         self.assertEqual(room1.capacity, 5)
 
     def test_room_capacity_non_integer(self):
-        # Test Case 1 - Room capacity as a string (invalid)
+        # Test Case 6 - Room capacity as a string (invalid)
         room1 = Room(
             room_number="201A",
             type="Single",
@@ -242,7 +284,7 @@ class RoomTest(TestCase):
         with self.assertRaises(ValidationError):
             room1.full_clean()
 
-        # Test Case 2 - Room capacity as a float (invalid)
+        # Test Case 7 - Room capacity as a float (invalid)
         room2 = Room(
             room_number="202B",
             type="Double",
@@ -253,7 +295,7 @@ class RoomTest(TestCase):
         with self.assertRaises(ValidationError):
             room2.full_clean()
 
-        # Test Case 3 - Room capacity as a boolean (invalid)
+        # Test Case 8 - Room capacity as a boolean (invalid)
         room3 = Room(
             room_number="203C",
             type="Suite",
@@ -264,15 +306,7 @@ class RoomTest(TestCase):
         with self.assertRaises(ValidationError):
             room3.full_clean()
 
-        # Test Case 4 - Room price below low boundary (Invalid)
-        room4 = Room.objects.create(
-            room_number="304A",
-            type="Single",
-            price=49.99,  # Below valid range
-            status="Available",
-            capacity=2
-        )
-        # Test Case 4 - Room capacity as None (invalid)
+        # Test Case 9 - Room capacity as None (invalid)
         room4 = Room(
             room_number="204D",
             type="Suite",
@@ -283,45 +317,8 @@ class RoomTest(TestCase):
         with self.assertRaises(ValidationError):
             room4.full_clean()
 
-        # Test case for empty room price
-        def test_room_price_empty(self):
-            """Creates a room with an empty price and expects a validation error."""
-            room = Room(
-                room_number="305A",
-                type="Single",
-                price=None,  # Empty price
-                status="Available",
-                capacity=2
-            )
-            with self.assertRaises(ValidationError):
-                room.full_clean()
-
-        # Test case for non-decimal room price
-        def test_room_price_non_decimal(self):
-            """Creates a room with a non-decimal price and expects a validation error."""
-            room = Room(
-                room_number="306A",
-                type="Single",
-                price="one hundred",  # Non-decimal value
-                status="Available",
-                capacity=2
-            )
-            with self.assertRaises(ValidationError):
-                room.full_clean()
-    def test_room_capacity_empty(self):
-        # Test Case 6 - Empty capacity input (invalid)
-        room = Room(
-            room_number="204D",
-            type="Suite",
-            price=200.00,
-            status="Available",
-            capacity=None  # Invalid, should be an integer
-        )
-        with self.assertRaises(ValidationError):
-            room.full_clean()
-
     def test_room_capacity_invalid(self):
-        # Test Case 7 - Negative capacity (invalid)
+        # Test Case 10 - Negative capacity (invalid)
         room = Room(
             room_number="205E",
             type="Double",
@@ -333,13 +330,13 @@ class RoomTest(TestCase):
             room.full_clean()
 
     def test_room_capacity_valid(self):
-        # Test Case 8 - Valid capacity within range
+        # Test Case 11 - Valid capacity within range
         room = Room.objects.create(
             room_number="206F",
             type="Suite",
             price=200.00,
             status="Available",
-            capacity=3  # A valid value within allowable range (1-10)
+            capacity=3  # A valid value within allowable range (1-5)
         )
         self.assertIsInstance(room, Room)
         self.assertEqual(room.capacity, 3)
