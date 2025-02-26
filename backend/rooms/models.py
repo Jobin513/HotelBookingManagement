@@ -4,11 +4,6 @@ from decimal import Decimal
 from django.core.exceptions import ValidationError
 from django.db import models
 
-<<<<<<< HEAD
-=======
-
->>>>>>> b32c50fcdd548ed0ce3fd4aa32dc7298f394177f
-
 class Room(models.Model):
     ROOM_TYPE_CHOICES = [
         ('Single', 'Single'),
