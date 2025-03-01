@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rooms',
+    'guests',
+    'bookings',
     'rest_framework',
     'corsheaders',
 ]
@@ -86,9 +88,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'easy_lodge',           # Your database name
         'USER': 'postgres',     # Your PostgreSQL username
-        'PASSWORD': 'Dog@9177167739',       # Your PostgreSQL password
+        'PASSWORD': '****',       # Your PostgreSQL password
         'HOST': 'localhost',               # Leave as 'localhost' if you're using local PostgreSQL
-        'PORT': '5432',                    # Default PostgreSQL port
+        'PORT': '5434',                    # Default PostgreSQL port
     }
 }
 

@@ -16,7 +16,13 @@ class GuestTest(TestCase):
             status="active"
         )
         self.assertIsInstance(guest, Guest)
-        self.assertEqual(Guest.objects.count(), 1)
+        self.assertEqual(guest.first_name, "John")
+        self.assertEqual(guest.last_name, "Doe")
+        self.assertEqual(guest.email, "johndoe@example.com")
+        self.assertEqual(guest.phone_number, "2012233210")
+        self.assertEqual(guest.address, "123 Main St")
+        self.assertEqual(guest.status, "active")
+
 
     def test_empty_first_name(self):
         # Test Case 2 - Empty first name (invalid)
@@ -115,7 +121,12 @@ class GuestTest(TestCase):
             status="active"
         )
         self.assertIsInstance(guest, Guest)
-        self.assertEqual(Guest.objects.count(), 1)
+        self.assertEqual(guest.first_name, "John")
+        self.assertEqual(guest.last_name, "Doe")
+        self.assertEqual(guest.email, "johndoe@example.com")
+        self.assertEqual(guest.phone_number, "")
+        self.assertEqual(guest.address, "123 Main St")
+        self.assertEqual(guest.status, "active")
 
     def test_empty_address(self):
         # Test Case 9 - Empty address (valid)
@@ -128,4 +139,9 @@ class GuestTest(TestCase):
             status="active"
         )
         self.assertIsInstance(guest, Guest)
-        self.assertEqual(Guest.objects.count(), 1)
+        self.assertEqual(guest.first_name, "John")
+        self.assertEqual(guest.last_name, "Doe")
+        self.assertEqual(guest.email, "johndoe@example.com")
+        self.assertEqual(guest.phone_number, "2012233210")
+        self.assertEqual(guest.address, "")
+        self.assertEqual(guest.status, "active")

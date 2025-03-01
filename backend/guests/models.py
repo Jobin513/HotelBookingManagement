@@ -1,7 +1,6 @@
-from typing import re
-
+from django.core.validators import validate_email
 from django.db import models
-from pydantic_core import ValidationError
+from django.core.exceptions import ValidationError
 
 
 class Guest(models.Model):
@@ -21,29 +20,31 @@ class Guest(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
 
     def clean(self):
+        # First name validation
         if not self.first_name:
             raise ValidationError("First name cannot be empty.")
+
+        # Last name validation
         if not self.last_name:
             raise ValidationError("Last name cannot be empty.")
+
+        # Email validation
         if not self.email:
             raise ValidationError("Email cannot be empty.")
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", self.email):
+        try:
+            validate_email(self.email)  # Uses Django's built-in email validator
+        except ValidationError:
             raise ValidationError("Invalid email format.")
         if Guest.objects.filter(email=self.email).exists():
             raise ValidationError("Email already exists.")
 
-        # Phone number validation
-        if not self.phone_number.isdigit():
+            # Phone number validation
+        if self.phone_number and not self.phone_number.isdigit():
             raise ValidationError("Phone number must be numeric.")
-        if len(self.phone_number) != 10:
-            raise ValidationError("Phone number must be exactly 10 digits.")
 
-        # Address validation
-        if not self.address:
-            raise ValidationError("Address cannot be empty.")
+        if self.phone_number and len(self.phone_number) != 10:
+            raise ValidationError("Phone number must be exactly 10 digits long.")
 
-        if self.status not in dict(self.STATUS_CHOICES):
-            raise ValidationError("Invalid status. Must be Active or Inactive.")
         super().clean()
 
     def __str__(self):
