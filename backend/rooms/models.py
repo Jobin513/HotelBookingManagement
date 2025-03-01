@@ -17,6 +17,7 @@ class Room(models.Model):
         ('Under Maintenance', 'Under Maintenance'),
     ]
 
+    room_id = models.AutoField(primary_key=True)
     room_number = models.CharField(max_length=50)  # Alphanumeric room number
     type = models.CharField(max_length=50, choices=ROOM_TYPE_CHOICES)
     price = models.DecimalField(max_digits=10, decimal_places=2)
