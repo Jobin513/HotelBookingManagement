@@ -91,5 +91,7 @@ The React app will run at http://localhost:3000.
 ### Step 10: Visit the Application
 After starting both the Django backend and React frontend:
 
-Django Backend: Visit http://127.0.0.1:8000 for backend-related tasks.
+Django Backend: Visit http://127.0.0.1:8000/admin for backend-related tasks.
 React Frontend: Visit http://localhost:3000 to interact with the React frontend.
+
+
