@@ -16,13 +16,13 @@ class Booking(models.Model):
     ]
 
     booking_id = models.AutoField(primary_key=True)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    guest = models.ForeignKey(Guest, on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="bookings")
+    guest = models.ForeignKey(Guest, on_delete=models.CASCADE, related_name="bookings")
+    booking_status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     check_in = models.DateField()
     check_out = models.DateField()
     payment_status = models.BooleanField(default=False)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def clean(self):
         # Case 1: Ensure that check_in date is before check_out date
@@ -34,7 +34,7 @@ class Booking(models.Model):
             room=self.room,
             check_in__lt=self.check_out,
             check_out__gt=self.check_in,
-            status='confirmed'  # Only confirmed bookings should be checked
+            booking_status='confirmed'  # Only confirmed bookings should be checked
         )
         if overlapping_bookings.exists():
             raise ValidationError("The room is already booked for the selected dates.")
@@ -46,19 +46,15 @@ class Booking(models.Model):
             raise ValidationError("Total price cannot be more than 500.")
 
         # Case 4: Validate the room and guest status
-        if self.room.status not in ['Available', 'Under Maintenance']:
+        if self.room.room_status not in ['Available']:
             raise ValidationError("Room is not available for booking.")
 
-        if not Guest.objects.filter(id=self.guest.id).exists():
+        if not Guest.objects.filter(guest_id=self.guest.guest_id).exists():
             raise ValidationError("Guest does not exist.")
 
         # Case 5: Ensure the check_in date is not in the past
         if self.check_in < date.today():
             raise ValidationError("Check-in date cannot be in the past.")
 
-        # Additional Case: Ensure room is not in an invalid status
-        if self.room.status == 'Booked':
-            raise ValidationError("Room is marked as booked and cannot be booked again.")
-
     def _str_(self):
-        return f"Booking {self.booking_id} - {self.guest.first_name} {self.guest.last_name} ({self.status})"
+        return f"Booking {self.booking_id} - {self.guest.first_name} {self.guest.last_name} ({self.booking_status}) ({self.payment_status})"

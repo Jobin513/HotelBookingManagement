@@ -3,9 +3,9 @@ from .models import Room
 
 
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ('room_number', 'type', 'price', 'status', 'capacity', 'created_date', 'last_changed_date')
-    search_fields = ('room_number', 'type')
-    list_filter = ('status', 'type')
+    list_display = ('room_id', 'room_number', 'room_type', 'rate', 'room_status', 'capacity', 'created_date', 'last_changed_date')
+    search_fields = ('room_number', 'room_type')
+    list_filter = ('room_status', 'room_type')
 
 
 admin.site.register(Room)

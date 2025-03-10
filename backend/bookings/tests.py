@@ -9,17 +9,43 @@ from datetime import date
 class BookingTest(TestCase):
 
     def setUp(self):
-        """Set up test data for Booking tests"""
-        # Creating a room for the test
-        self.room = Room.objects.create(
-            room_number=101,
-            type="Single",
-            price=50.00,
-            status="Available",
+        """Set up test data for Is_Room_Available tests"""
+        # Valid room under Maintenance
+        self.room1 = Room.objects.create(
+            room_number="101A",
+            room_type="Single",
+            rate=50.00,
+            room_status="Maintenance",
             capacity=2
         )
 
-        # Creating a guest for the test
+        # Valid room under Available
+        self.room2 = Room.objects.create(
+            room_number="102B",
+            room_type="Double",
+            rate=75.00,
+            room_status="Available",
+            capacity=4
+        )
+
+        # Room with an existing booking (March 10 - March 15, 2025)
+        self.room3 = Room.objects.create(
+            room_number="103C",
+            room_type="Suite",
+            rate=100.00,
+            room_status="Available",
+            capacity=3
+        )
+
+        # Creating an existing booking
+        self.existing_booking = Room.objects.create(
+            room=self.room3,
+            check_in=datetime(2025, 3, 10),
+            check_out=datetime(2025, 3, 15),
+            guest_name="John Doe"
+        )
+
+        # Creating a guest for the booking
         self.guest = Guest.objects.create(
             guest_id=10001,
             first_name="John",
@@ -38,6 +64,7 @@ class BookingTest(TestCase):
             payment_status=True,
             total_price=50.00,
         )
+
 
     def test_create_valid_booking(self):
         """TEST CASE 1: Valid booking creation"""

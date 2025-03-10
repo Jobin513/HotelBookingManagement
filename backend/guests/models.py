@@ -17,7 +17,10 @@ class Guest(models.Model):
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
+    guest_status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
     def clean(self):
         # First name validation
@@ -35,7 +38,7 @@ class Guest(models.Model):
             validate_email(self.email)  # Uses Django's built-in email validator
         except ValidationError:
             raise ValidationError("Invalid email format.")
-        if Guest.objects.filter(email=self.email).exists():
+        if Guest.objects.exclude(guest_id=self.guest_id).filter(email=self.email).exists():
             raise ValidationError("Email already exists.")
 
             # Phone number validation
@@ -47,6 +50,7 @@ class Guest(models.Model):
 
         super().clean()
 
+
     def __str__(self):
-        return f"{self.first_name} {self.last_name} ({self.status})"
+        return f"{self.first_name} {self.last_name} ({self.guest_status})"
 
