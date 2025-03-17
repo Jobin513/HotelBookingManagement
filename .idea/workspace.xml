@@ -5,8 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e13a7838-6ad5-4d2b-a341-c677e5df1b21" name="Changes" comment="Feat: Implemented unit testing for room type and room status">
+      <change afterPath="$PROJECT_DIR$/backend/payments/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/payments/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/rooms/forms.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/rooms/templates/admin/check_availability.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bookings/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bookings/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bookings/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bookings/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/bookings/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/bookings/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/guests/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/guests/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/hotel_management/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/hotel_management/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/hotel_management/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/hotel_management/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/payments/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payments/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/payments/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/payments/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/rooms/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/rooms/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/rooms/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/rooms/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/rooms/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/rooms/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/rooms/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/rooms/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +31,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Python Script" />
       </list>
     </option>
@@ -30,26 +46,26 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "history": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
     {
-      "searchQuery": "test.py",
-      "state": "OPEN",
-      "assignee": "sateesh077"
+      &quot;searchQuery&quot;: &quot;test.py&quot;,
+      &quot;state&quot;: &quot;OPEN&quot;,
+      &quot;assignee&quot;: &quot;sateesh077&quot;
     }
   ],
-  "lastFilter": {
-    "searchQuery": "test.py",
-    "state": "OPEN",
-    "assignee": "sateesh077"
+  &quot;lastFilter&quot;: {
+    &quot;searchQuery&quot;: &quot;test.py&quot;,
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;sateesh077&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "git@github.com:Jobin513/HotelBookingManagement.git",
-    "accountId": "58b9f93f-27b4-44bf-b455-cf7fc66a27ff"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:Jobin513/HotelBookingManagement.git&quot;,
+    &quot;accountId&quot;: &quot;58b9f93f-27b4-44bf-b455-cf7fc66a27ff&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -61,22 +77,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.services.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "development",
-    "last_opened_file_path": "C:/Users/Jobin/Documents/Programming/Python/HotelBookingManagement",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Python tests.Python tests for tests.RoomTest.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.Python tests in tests.py.executor&quot;: &quot;Run&quot;,
+    &quot;Python.services.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Jobin/Documents/Programming/Python/HotelBookingManagement&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jobin\Documents\Programming\Python\HotelBookingManagement\backend\rooms\templates\admin" />
       <recent name="C:\Users\Jobin\Documents\Programming\Python\HotelBookingManagement" />
       <recent name="C:\Users\Jobin\Documents\Programming\Python\HotelBookingManagement\backend" />
       <recent name="C:\Users\Jobin\Documents\Programming\Python\HotelBookingManagement\docs" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Python tests for tests.RoomTest" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="HotelBookingManagement" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend/rooms" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;tests.RoomTest&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.Python tests for tests.RoomTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -151,5 +193,16 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Feat: Implemented unit testing for room type and room status" />
     <option name="LAST_COMMIT_MESSAGE" value="Feat: Implemented unit testing for room type and room status" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/backend/rooms/admin.py</url>
+          <line>10</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

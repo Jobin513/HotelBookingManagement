@@ -1,11 +1,10 @@
+
 from django.db import models
 from django.core.exceptions import ValidationError
-from datetime import date
+from datetime import date, datetime
 from decimal import Decimal
-
-# Assuming Room and Guest models are defined elsewhere in your application
-from rooms.models import Room
 from guests.models import Guest
+from rooms.models import Room
 
 
 class Booking(models.Model):
@@ -36,6 +35,10 @@ class Booking(models.Model):
             check_out__gt=self.check_in,
             booking_status='confirmed'  # Only confirmed bookings should be checked
         )
+        # Exclude the current booking if it's being edited
+        if self.pk:  # Check if this is an existing booking
+            overlapping_bookings = overlapping_bookings.exclude(pk=self.pk)
+
         if overlapping_bookings.exists():
             raise ValidationError("The room is already booked for the selected dates.")
 

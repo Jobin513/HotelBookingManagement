@@ -13,7 +13,7 @@ class GuestTest(TestCase):
             email="johndoe@example.com",
             phone_number="2012233210",
             address="123 Main St",
-            status="active"
+            guest_status="active"
         )
         self.assertIsInstance(guest, Guest)
         self.assertEqual(guest.first_name, "John")
@@ -21,7 +21,7 @@ class GuestTest(TestCase):
         self.assertEqual(guest.email, "johndoe@example.com")
         self.assertEqual(guest.phone_number, "2012233210")
         self.assertEqual(guest.address, "123 Main St")
-        self.assertEqual(guest.status, "active")
+        self.assertEqual(guest.guest_status, "active")
 
 
     def test_empty_first_name(self):
@@ -32,7 +32,7 @@ class GuestTest(TestCase):
             email="johndoe@example.com",
             phone_number="2012233210",
             address="123 Main St",
-            status="active"
+            guest_status="active"
         )
         with self.assertRaises(ValidationError):
             guest.full_clean()
@@ -45,7 +45,7 @@ class GuestTest(TestCase):
             email="johndoe@example.com",
             phone_number="2012233210",
             address="123 Main St",
-            status="active"
+            guest_status="active"
         )
         with self.assertRaises(ValidationError):
             guest.full_clean()
@@ -58,7 +58,7 @@ class GuestTest(TestCase):
             email="invalidemail.com",  # Missing '@'
             phone_number="2012233210",
             address="123 Main St",
-            status="active"
+            guest_status="active"
         )
         with self.assertRaises(ValidationError):
             guest.full_clean()
@@ -71,7 +71,7 @@ class GuestTest(TestCase):
             email="johndoe@example.com",
             phone_number="2012233210",
             address="123 Main St",
-            status="active"
+            guest_status="active"
         )
         guest2 = Guest(
             first_name="John",
@@ -79,7 +79,7 @@ class GuestTest(TestCase):
             email="johndoe@example.com",  # Duplicate email
             phone_number="2012233210",
             address="123 Main St",
-            status="active"
+            guest_status="active"
         )
         with self.assertRaises(ValidationError):
             guest2.full_clean()
@@ -92,7 +92,7 @@ class GuestTest(TestCase):
             email="johndoe@example.com",
             phone_number="abc123",  # Invalid format
             address="123 Main St",
-            status="active"
+            guest_status="active"
         )
         with self.assertRaises(ValidationError):
             guest.full_clean()
@@ -105,7 +105,7 @@ class GuestTest(TestCase):
             email="johndoe@example.com",
             phone_number="201223321012345",  # Too long (15 digits)
             address="123 Main St",
-            status="active"
+            guest_status="active"
         )
         with self.assertRaises(ValidationError):
             guest.full_clean()
@@ -118,7 +118,7 @@ class GuestTest(TestCase):
             email="johndoe@example.com",
             phone_number="",  # Should be allowed
             address="123 Main St",
-            status="active"
+            guest_status="active"
         )
         self.assertIsInstance(guest, Guest)
         self.assertEqual(guest.first_name, "John")
@@ -126,7 +126,7 @@ class GuestTest(TestCase):
         self.assertEqual(guest.email, "johndoe@example.com")
         self.assertEqual(guest.phone_number, "")
         self.assertEqual(guest.address, "123 Main St")
-        self.assertEqual(guest.status, "active")
+        self.assertEqual(guest.guest_status, "active")
 
     def test_empty_address(self):
         # Test Case 9 - Empty address (valid)
@@ -136,7 +136,7 @@ class GuestTest(TestCase):
             email="johndoe@example.com",
             phone_number="2012233210",
             address="",  # Should be allowed
-            status="active"
+            guest_status="active"
         )
         self.assertIsInstance(guest, Guest)
         self.assertEqual(guest.first_name, "John")
@@ -144,4 +144,4 @@ class GuestTest(TestCase):
         self.assertEqual(guest.email, "johndoe@example.com")
         self.assertEqual(guest.phone_number, "2012233210")
         self.assertEqual(guest.address, "")
-        self.assertEqual(guest.status, "active")
+        self.assertEqual(guest.guest_status, "active")

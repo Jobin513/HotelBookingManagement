@@ -7,6 +7,7 @@ from django.db import models
 
 
 
+
 class Room(models.Model):
     ROOM_TYPE_CHOICES = [
         ('Single', 'Single'),
@@ -55,62 +56,69 @@ class Room(models.Model):
             raise ValidationError("Room capacity cannot exceed 5.")
         super().clean()
 
-    def is_room_available(self, check_in, check_out, room_id):
-        """
+
+
+
+
+
+
+
+    """
+    @property
+    def is_room_available(self, check_in, check_out):
+
         Checks if the room is available for the given check-in and check-out dates.
 
         :param check_in: The check-in date (datetime object)
         :param check_out: The check-out date (datetime object)
-        :param room_id: The ID of the room to check availability for
-        :return: Tuple (boolean availability, error message if any)
-        """
+        :return: Boolean availability and error message if any
+
         try:
             from bookings.models import Booking
-            room = Room.objects.get(id=room_id)
-        except Room.DoesNotExist:
-            print("Error: Room ID not found in the database.")
-            return False
+            # Ensure room exists (the room object is already available in `self`).
+            if not self:
+                raise ValidationError("Error: Room ID is required.")
 
-        if room_id is None:
-            print("Error: Room ID is required.")
-            return False
+            if not isinstance(check_in, datetime) or not isinstance(check_out, datetime):
+                raise ValidationError("Error: Check-in and check-out must be valid datetime objects.")
 
-        if not isinstance(check_in, datetime) or not isinstance(check_out, datetime):
-            print("Error: Check-in and check-out must be valid date objects.")
-            return False
+            # Ensure the dates are not in the past
+            current_date = datetime.now()
+            if check_in < current_date or check_out < current_date:
+                raise ValidationError("Error: Check-in and check-out dates must not be in the past.")
 
-        current_date = datetime.now()
-        if check_in < current_date or check_out < current_date:
-            print("Error: Check-in and check-out dates must not be in the past.")
-            return False
+            # Ensure check_in date is before check_out date
+            if check_in >= check_out:
+                raise ValidationError("Error: Check-in date must be before check-out date.")
 
-        if check_in >= check_out:
-            print("Error: Check-in date must be before check-out date.")
-            return False
+            # Ensure booking duration is within limits (example: 14 days maximum)
+            max_days_allowed = 14
+            if (check_out - check_in).days > max_days_allowed:
+                raise ValidationError(f"Error: The maximum booking duration is {max_days_allowed} days.")
 
-        max_days_allowed = 14
-        if (check_out - check_in).days > max_days_allowed:
-            print(f"Error: The maximum booking duration is {max_days_allowed} days.")
-            return False
+            # Check if room is booked or under maintenance
+            if self.room_status == "Booked":
+                raise ValidationError("Error: Room is already booked for the selected dates.")
+            if self.room_status == "Under Maintenance":
+                raise ValidationError("Error: Room is currently under maintenance and cannot be booked.")
 
-        if room.room_status == "Booked":
-            print("Error: Room is already booked for the selected dates.")
-            return False
+            # Check for overlapping bookings
+            overlapping_bookings = Booking.objects.filter(
+                room=self,
+                check_in__lt=check_out,  # Booking starts before check-out date
+                check_out__gt=check_in  # Booking ends after check-in date
+            )
 
-        if room.room_status == "Under Maintenance":
-            print("Error: Room is currently under maintenance and cannot be booked.")
-            return False
+            if overlapping_bookings.exists():
+                raise ValidationError("Error: Room is unavailable for the selected dates.")
 
-        existing_bookings = Booking.objects.filter(
-            room_id=room_id,
-            check_in__lt=check_out,
-            check_out__gt=check_in
-        )
-        if existing_bookings.exists():
-            print("Error: Room is unavailable for the selected dates.")
-            return False
+            # If no issues, return True indicating the room is available
+            return True
 
-        return True
-
+        except ValidationError as e:
+            # Return False and the error message
+            return False, str(e)
+    """
     def __str__(self):
+
         return f"Room {self.room_number} - {self.room_type}"

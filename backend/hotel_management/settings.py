@@ -65,7 +65,9 @@ ROOT_URLCONF = 'hotel_management.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'easy_lodge',           # Your database name
         'USER': 'postgres',     # Your PostgreSQL username
-        'PASSWORD': '****',       # Your PostgreSQL password
+        'PASSWORD': '5737',       # Your PostgreSQL password
         'HOST': 'localhost',               # Leave as 'localhost' if you're using local PostgreSQL
         'PORT': '5434',                    # Default PostgreSQL port
     }
